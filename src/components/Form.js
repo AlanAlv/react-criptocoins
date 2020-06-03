@@ -28,12 +28,12 @@ const Form = () => {
         {code: 'EUR', name: 'Euro'},
         {code: 'GBP', name: 'British Pound'}
     ]
-    const [coin, Select] = useCoin('Choose your coin', '', COINS);
+    const [coin, SelectCoin] = useCoin('Choose your coin', '', COINS);
 
     return (  
         <form>
 
-            <Select />
+            <SelectCoin />
             <Button
                 type="submit"
                 value="Calculate"
