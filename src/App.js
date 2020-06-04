@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import image from './cryptocoins.png';
 import Form from './components/Form';
+import Quoting from './components/Quoting';
 import axios from 'axios'
 
 const Container = styled.div`
@@ -41,6 +42,8 @@ function App() {
 
   const [coin, saveCoin] = useState('');
   const [cryptocoin, saveCryptocoin] = useState('');
+  const [result, saveResult] = useState({});
+
 
   useEffect( () => {
 
@@ -51,7 +54,7 @@ function App() {
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptocoin}&tsyms=${coin}`;
       const result = await axios.get(url);
   
-      console.log (result.data.DISPLAY[cryptocoin][coin]);
+      saveResult(result.data.DISPLAY[cryptocoin][coin]);
   
     }
 
@@ -73,6 +76,11 @@ function App() {
           saveCoin={saveCoin}
           saveCryptocoin={saveCryptocoin}
         />
+        
+        <Quoting
+          result={result}
+        />
+      
       </div>
     </Container>
     
