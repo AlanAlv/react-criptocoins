@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import image from './cryptocoins.png';
 import Form from './components/Form';
+import axios from 'axios'
 
 const Container = styled.div`
   max-width: 900px;
@@ -37,6 +38,27 @@ const Heading = styled.h1`
 `;
 
 function App() {
+
+  const [coin, saveCoin] = useState('');
+  const [cryptocoin, saveCryptocoin] = useState('');
+
+  useEffect( () => {
+
+    const calculateCryptocoin = async () => {
+      if (coin === '') return;    
+      
+      // Call API
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptocoin}&tsyms=${coin}`;
+      const result = await axios.get(url);
+  
+      console.log (result.data.DISPLAY[cryptocoin][coin]);
+  
+    }
+
+    calculateCryptocoin();
+
+  }, [ coin, cryptocoin ]);
+
   return (
     <Container>
       <div>
@@ -47,7 +69,10 @@ function App() {
       </div>
       <div>
         <Heading>Cryptocoin Calculator</Heading>
-        <Form />
+        <Form 
+          saveCoin={saveCoin}
+          saveCryptocoin={saveCryptocoin}
+        />
       </div>
     </Container>
     
