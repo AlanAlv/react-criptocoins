@@ -1,3 +1,6 @@
+## Project running on Netlify 
+[https://react-cryptocoins.netlify.app/](https://react-cryptocoins.netlify.app/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
