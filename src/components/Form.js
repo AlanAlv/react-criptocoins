@@ -4,6 +4,7 @@ import useCoin from '../hooks/useCoin';
 import useCryptocoin from '../hooks/useCryptocoin';
 import axios from 'axios';
 import Error from './Error';
+import PropTypes from 'prop-types';
 
 const Button = styled.input`
     margin-top: 20px;
@@ -89,4 +90,9 @@ const Form = ({ saveCoin, saveCryptocoin }) => {
     );
 }
  
+Form.propTypes = {
+    saveCoin: PropTypes.func.isRequired,
+    saveCryptocoin: PropTypes.func.isRequired
+}
+
 export default Form;

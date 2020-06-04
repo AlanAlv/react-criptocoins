@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
 const Label = styled.label`
     font-family: 'Bebas Neue', cursive;
@@ -49,6 +50,12 @@ const useCryptocoin = (label, initialState, options ) => {
 
     // Return state, interface and func to modify state
     return [state, SelectCryptocoin, updateState];
+}
+
+useCryptocoin.propTypes = {
+    label: PropTypes.string.isRequired,
+    initialState: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired
 }
 
 export default useCryptocoin;
