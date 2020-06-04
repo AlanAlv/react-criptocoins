@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import useCoin from '../hooks/useCoin';
 import useCryptocoin from '../hooks/useCryptocoin';
 import axios from 'axios';
+import Error from './Error';
 
 const Button = styled.input`
     margin-top: 20px;
@@ -26,6 +27,7 @@ const Form = () => {
 
     // Cryptocoin state
     const [ cryptoList, saveCryptocoins ] = useState([]);
+    const [ error, saveError ] = useState(false);
 
     const COINS = [
         {code: 'USD', name: 'American Dollar'},
@@ -48,9 +50,32 @@ const Form = () => {
         }
         callAPI()
     }, []);
-    return (  
-        <form>
 
+    // User clicks submit
+    const calculateCoin = e => {
+        e.preventDefault();
+
+        // Validation
+        if (coin === '' || cryptocoin === ''){
+            saveError(true);
+            return;
+        }
+
+        // Send data to main component
+        saveError(false)
+    }
+    return (  
+        <form
+            onSubmit={calculateCoin}
+        >
+            {error 
+                ? 
+                    <Error 
+                        message='All fields are required' 
+                    /> 
+                : 
+                    null
+            }
             <SelectCoin />
             <SelectCryptocoin />
             <Button
