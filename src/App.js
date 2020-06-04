@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import image from './cryptocoins.png';
 import Form from './components/Form';
 import Quoting from './components/Quoting';
-import axios from 'axios'
+import axios from 'axios';
+import Spinner from './components/Spinner'
 
 const Container = styled.div`
   max-width: 900px;
@@ -43,6 +44,7 @@ function App() {
   const [coin, saveCoin] = useState('');
   const [cryptocoin, saveCryptocoin] = useState('');
   const [result, saveResult] = useState({});
+  const [loading, saveLoading] = useState(false);
 
 
   useEffect( () => {
@@ -52,15 +54,35 @@ function App() {
       
       // Call API
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptocoin}&tsyms=${coin}`;
+      
       const result = await axios.get(url);
   
-      saveResult(result.data.DISPLAY[cryptocoin][coin]);
-  
+      // Show Spinner
+      saveLoading(true);
+
+      // Hide Spinner & show result
+      setTimeout( () => {
+
+        saveLoading(false);
+
+        saveResult(result.data.DISPLAY[cryptocoin][coin]);
+
+      }, 2000);
     }
 
     calculateCryptocoin();
 
   }, [ coin, cryptocoin ]);
+
+  // Show Spinner or result
+  const component = (loading) 
+    ? 
+      <Spinner /> 
+    :
+    <Quoting
+      result={result}
+    />
+  ; 
 
   return (
     <Container>
@@ -77,9 +99,7 @@ function App() {
           saveCryptocoin={saveCryptocoin}
         />
         
-        <Quoting
-          result={result}
-        />
+        {component}
       
       </div>
     </Container>
